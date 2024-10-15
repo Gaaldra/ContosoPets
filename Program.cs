@@ -73,15 +73,7 @@ for (int i = 0; i < maxPets; i++)
 
 do
 {
-    // Add this to debug, cause Console.Clear breaks
-    try
-    {
-        Console.Clear();
-    }
-    catch (System.IO.IOException)
-    {
-        Console.WriteLine("It seems it wasn't possible to clear your console. Continuing... ");
-    }
+    Console.Clear();
 
     Console.WriteLine("Welcome to the Contoso PetFrieds app. Your main menu options are:");
     Console.WriteLine(" 1. List all of our current pet information");
@@ -106,14 +98,7 @@ do
     Console.WriteLine($"You selected menu option {menuSelection}");
     Console.WriteLine($"Press the Enter key to continue");
     Console.ReadLine();
-    try
-    {
-        Console.Clear();
-    }
-    catch (System.IO.IOException)
-    {
-        Console.WriteLine("It seems it wasn't possible to clear your console. Continuing... ");
-    }
+    Console.Clear();
 
 
     switch (menuSelection)
