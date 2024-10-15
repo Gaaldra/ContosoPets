@@ -120,6 +120,38 @@ do
             Console.WriteLine("Press the Enter key to continue");
             Console.ReadLine();
             break;
+        case "2":
+            int petCount = 0;
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] == "ID #: ") continue;
+                petCount++;
+            }
+
+            if (petCount >= maxPets)
+            {
+                Console.WriteLine("We have our limit on the number of pets that we can manage.");
+                Console.WriteLine("Press the Enter key to continue");
+                Console.ReadLine();
+                continue;
+            }
+
+            Console.WriteLine($"We currently have {petCount} pets that need homes. We can manage {(maxPets - petCount)} more.");
+            Console.WriteLine("Do you want to enter info for another pet? (Y/N)");
+            readResult = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(readResult) || readResult.ToLower() == "n")
+            {
+                Console.WriteLine("Another pet has not been added\nPress the Enter key to continue");
+                Console.ReadLine();
+                continue;
+            }
+
+            ourAnimals[petCount, 0] = $"ID #: {petCount + 1}";
+            Console.WriteLine("Another pet has been added");
+            Console.WriteLine("Press the Enter key to continue");
+            Console.ReadLine();
+            break;
     }
 
 } while (menuSelection != "exit");
