@@ -73,6 +73,7 @@ for (int i = 0; i < maxPets; i++)
 
 do
 {
+    // Add this to debug, cause Console.Clear breaks
     try
     {
         Console.Clear();
@@ -105,7 +106,15 @@ do
     Console.WriteLine($"You selected menu option {menuSelection}");
     Console.WriteLine($"Press the Enter key to continue");
     Console.ReadLine();
-    Console.Clear();
+    try
+    {
+        Console.Clear();
+    }
+    catch (System.IO.IOException)
+    {
+        Console.WriteLine("It seems it wasn't possible to clear your console. Continuing... ");
+    }
+
 
     switch (menuSelection)
     {
@@ -147,8 +156,72 @@ do
                 continue;
             }
 
-            ourAnimals[petCount, 0] = $"ID #: {petCount + 1}";
-            Console.WriteLine("Another pet has been added");
+            bool validEntry = false;
+
+            // Get the specie
+            do
+            {
+                Console.WriteLine("\n\rEnter 'dog' or 'cat' to begin a new entry");
+                readResult = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(readResult)) continue;
+                if ((readResult.ToLower() != "dog") && (readResult.ToLower() != "cat")) continue;
+                animalSpecies = readResult.ToLower();
+                validEntry = true;
+
+            } while (!validEntry);
+
+            // Get the age
+            validEntry = false;
+            do
+            {
+                int petAge;
+                Console.WriteLine("Enter the pet's age or enter ? if unknown");
+                readResult = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(readResult)) continue;
+                if (readResult == "?")
+                {
+                    animalAge = readResult;
+                    validEntry = true;
+                    continue;
+                }
+                validEntry = int.TryParse(readResult, out petAge);
+                animalAge = petAge.ToString();
+            } while (!validEntry);
+
+            // Get the physical description
+            Console.WriteLine("Enter a physical description of the pet (size, color, gender, weight, housebroken)");
+            readResult = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(readResult)) animalPhysicalDescription = readResult;
+
+            // Get the personality
+            Console.WriteLine("Enter a description of the pet's personality (likes or dislikes, tricks, energy level)");
+            readResult = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(readResult)) animalPersonalityDescription = readResult;
+
+            // Get the nickname
+            do
+            {
+                Console.WriteLine("Enter a nickname for the pet"); ;
+                readResult = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(readResult))
+                {
+                    Console.WriteLine("You need to enter the pet's nickname");
+                    continue;
+                }
+                animalNickname = readResult;
+            } while (animalNickname == "");
+
+            animalID = animalSpecies.Substring(0, 1) + (petCount + 1).ToString();
+
+            // store the pet information
+            ourAnimals[petCount, 0] = $"ID #: {animalID}";
+            ourAnimals[petCount, 1] = $"Species: {animalSpecies}";
+            ourAnimals[petCount, 2] = $"Age: {animalAge}";
+            ourAnimals[petCount, 3] = $"Nickname: {animalNickname}";
+            ourAnimals[petCount, 4] = $"Physical description: {animalPhysicalDescription}";
+            ourAnimals[petCount, 5] = $"Personality: {animalPersonalityDescription}";
+
+            Console.WriteLine($"{animalNickname} has been added");
             Console.WriteLine("Press the Enter key to continue");
             Console.ReadLine();
             break;
