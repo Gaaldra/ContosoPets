@@ -248,6 +248,44 @@ do
             Console.WriteLine("Press the Enter key to continue");
             Console.ReadLine();
             break;
+        case "4":
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] != "ID #: ")
+                {
+                    animalID = ourAnimals[i, 0];
+                    if (ourAnimals[i, 3] == "Nickname: ")
+                    {
+                        validEntry = false;
+                        do
+                        {
+                            Console.WriteLine($"Enter a nickname for {animalID}");
+                            readResult = Console.ReadLine();
+                            if (string.IsNullOrWhiteSpace(readResult)) continue;
+                            ourAnimals[i, 3] = $"Nickname: {readResult.Trim()}";
+                            validEntry = true;
+                        } while (!validEntry);
+                    }
+
+                    if (ourAnimals[i, 5] == "Personality: ")
+                    {
+                        validEntry = false;
+                        do
+                        {
+                            Console.WriteLine($"Enter a personality description for {animalID}");
+                            readResult = Console.ReadLine();
+                            if (string.IsNullOrWhiteSpace(readResult)) continue;
+                            ourAnimals[i, 5] = $"Personality: {readResult.Trim()}";
+                            validEntry = true;
+                        } while (!validEntry);
+                    }
+                }
+            }
+
+            Console.WriteLine("Nickname and personality description fields are complete for all of our friends");
+            Console.WriteLine("Press the Enter key to continue");
+            Console.ReadLine();
+            break;
     }
 
 } while (menuSelection != "exit");
